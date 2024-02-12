@@ -1,5 +1,6 @@
 from addons import *
 
+
 @ctest_labeler("misc")
 def test_psithon2():
     ctest_runner(__file__, [
@@ -13,4 +14,3 @@ def test_psithon2():
         "psiaux2/mysto3g.gbs",
         "psiaux2/S44.py",
     ])
-

@@ -528,7 +528,8 @@ funcs.append({
 })
 
 funcs.append({
-    "name": "wB97M-D3BJ",
+    "name":
+    "wB97M-D3BJ",
     "xc_functionals": {
         "HYB_MGGA_XC_WB97M_V": {}
     },
@@ -551,7 +552,8 @@ funcs.append({
 })
 
 funcs.append({
-    "name": "wB97X-D3BJ",
+    "name":
+    "wB97X-D3BJ",
     "xc_functionals": {
         "HYB_GGA_XC_WB97X_V": {}
     },

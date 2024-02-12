@@ -33,7 +33,6 @@ import os
 import glob
 import re
 
-
 DriverPath = ''
 if (len(sys.argv) == 2):
     DriverPath = sys.argv[1] + '/'

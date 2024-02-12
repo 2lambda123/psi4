@@ -1,5 +1,6 @@
 from addons import *
 
+
 @ctest_labeler("quick;smoke;fcidump;noc1")
 def test_fcidump():
     ctest_runner(__file__, [
@@ -9,4 +10,3 @@ def test_fcidump():
         "Ne.C1.cc-pVDZ.UHF.INTDUMP.ref",
         "Ne.6311G.frozen.INTDUMP.ref",
     ])
-

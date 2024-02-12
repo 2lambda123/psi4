@@ -25,7 +25,6 @@
 #
 # @END LICENSE
 #
-
 """
 Module of helper functions for ccresponse distributed property calculations.
 Defines functions for interacting with the database created by the run_XXX
@@ -42,7 +41,7 @@ from psi4 import core
 from psi4.driver import p4util
 
 
-def generate_inputs(db,name):
+def generate_inputs(db, name):
     """
         Generates the input files in each sub-directory of the
         distributed finite differences property calculation.
@@ -80,14 +79,13 @@ def generate_inputs(db,name):
         molecule.fix_com(True)
         inputfile = open('{0}/input.dat'.format(entry), 'w')
         inputfile.write("# This is a psi4 input file auto-generated for"
-            "computing properties by finite differences.\n\n")
+                        "computing properties by finite differences.\n\n")
         inputfile.write(
-            inp_template.format(
-                molname=molecule.name(),
-                disp=entry,
-                molecule_info=molecule.create_psi4_string_from_molecule(),
-                options=p4util.format_options_for_input(),
-                jobspec=db['prop_cmd']))
+            inp_template.format(molname=molecule.name(),
+                                disp=entry,
+                                molecule_info=molecule.create_psi4_string_from_molecule(),
+                                options=p4util.format_options_for_input(),
+                                jobspec=db['prop_cmd']))
         inputfile.close()
     db['inputs_generated'] = True
 
