@@ -145,10 +145,7 @@ def get_psifile(fileno: int, pidspace: str = str(os.getpid())) -> str:
     return targetfile
 
 
-def format_molecule_for_input(
-    mol: Union[str, core.Molecule],
-    name: str = '',
-    forcexyz: bool = False) -> str:
+def format_molecule_for_input(mol: Union[str, core.Molecule], name: str = '', forcexyz: bool = False) -> str:
     """Function to return a string of the output of
     :py:func:`~psi4.driver.inputparser.process_input` applied to the XYZ
     format of molecule, passed as either fragmented
@@ -375,9 +372,10 @@ def hold_options_state() -> Iterator[None]:
     and restore the collected keywords state when exiting the with-statement.
 
     """
-    pofm = prepare_options_for_modules(
-        changedOnly=True, commandsInsteadDict=False, globalsOnly=False, stateInsteadMediated=True
-    )
+    pofm = prepare_options_for_modules(changedOnly=True,
+                                       commandsInsteadDict=False,
+                                       globalsOnly=False,
+                                       stateInsteadMediated=True)
     yield
     _reset_pe_options(pofm)
 
@@ -539,7 +537,7 @@ def prepare_options_for_set_options() -> Dict[str, Any]:
     # we need the following dirty hack.
 
     try:
-        import forte # Needed for Forte options to run.
+        import forte  # Needed for Forte options to run.
     except ImportError:
         pass
     else:
@@ -566,13 +564,12 @@ def prepare_options_for_set_options() -> Dict[str, Any]:
     return flat_options
 
 
-def state_to_atomicinput(
-    *,
-    driver: str,
-    method: str,
-    basis: Optional[str] = None,
-    molecule: Optional[core.Molecule] = None,
-    function_kwargs: Optional[Dict[str, Any]] = None) -> AtomicInput:
+def state_to_atomicinput(*,
+                         driver: str,
+                         method: str,
+                         basis: Optional[str] = None,
+                         molecule: Optional[core.Molecule] = None,
+                         function_kwargs: Optional[Dict[str, Any]] = None) -> AtomicInput:
     """Form a QCSchema for job input from the current state of |PSIfour| settings.
 
     Parameters
@@ -607,7 +604,7 @@ def state_to_atomicinput(
     basis = basis or kw_basis
 
     resi = AtomicInput(
-         **{
+        **{
             "driver": driver,
             "extras": {
                 "wfn_qcvars_only": True,
@@ -619,7 +616,7 @@ def state_to_atomicinput(
             "keywords": keywords,
             "molecule": molecule.to_schema(dtype=2),
             "provenance": provenance_stamp(__name__),
-         })
+        })
 
     return resi
 
@@ -654,9 +651,7 @@ def mat2arr(mat: core.Matrix) -> List[List[float]]:
     return arr
 
 
-def expand_psivars(
-    pvdefs: Dict[str, Dict[str, Union[List[str], Callable]]],
-    verbose: Optional[int] = None):
+def expand_psivars(pvdefs: Dict[str, Dict[str, Union[List[str], Callable]]], verbose: Optional[int] = None):
     """From rules on building QCVariables from others, set new variables to
     P::e if all the contributors are available.
 
@@ -732,10 +727,9 @@ def provenance_stamp(routine: str, module: str = None) -> Dict[str, str]:
     return prov
 
 
-def plump_qcvar(
-    val: Union[float, str, List],
-    shape_clue: str,
-    ret: str = 'np') -> Union[float, np.ndarray, core.Matrix]:
+def plump_qcvar(val: Union[float, str, List],
+                shape_clue: str,
+                ret: str = 'np') -> Union[float, np.ndarray, core.Matrix]:
     """Prepare serialized QCVariable for :py:func:`~psi4.core.set_variable` by
     converting flat arrays into shaped ones and floating strings.
 

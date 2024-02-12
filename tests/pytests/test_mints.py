@@ -7,6 +7,7 @@ from utils import compare_arrays
 
 pytestmark = [pytest.mark.psi, pytest.mark.api]
 
+
 def test_export_ao_elec_dip_deriv():
     h2o = psi4.geometry("""
         O
@@ -43,6 +44,7 @@ def test_export_ao_elec_dip_deriv():
     G_python_MU_mat = psi4.core.Matrix.from_array(MU_Gradient)
     assert psi4.compare_matrices(PSI4_MU_Grad, G_python_MU_mat, 10, "DIPOLE_GRADIENT_TEST")  # TEST
 
+
 def test_export_ao_overlap_half_deriv():
     h2o = psi4.geometry("""
         O
@@ -76,10 +78,10 @@ def test_export_ao_overlap_half_deriv():
             deriv1_np[map_key3] = np.asarray(deriv1_mat["S_" + str(atom)][atom_cart])
 
             # Test (S_ii)^x = 2 * < i^x | i >
-            assert compare_arrays(deriv1_np[map_key1].diagonal(), deriv1_np[map_key3].diagonal()/2)
+            assert compare_arrays(deriv1_np[map_key1].diagonal(), deriv1_np[map_key3].diagonal() / 2)
 
             # Test (S_ii)^x = 2 * < i | i^x >
-            assert compare_arrays(deriv1_np[map_key2].diagonal(), deriv1_np[map_key3].diagonal()/2)
+            assert compare_arrays(deriv1_np[map_key2].diagonal(), deriv1_np[map_key3].diagonal() / 2)
 
             # Test (S_ij)^x = < i^x | j > + < j^x | i >
             assert compare_arrays(deriv1_np[map_key1] + deriv1_np[map_key1].transpose(), deriv1_np[map_key3])

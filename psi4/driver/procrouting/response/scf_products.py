@@ -606,6 +606,7 @@ class TDUSCFEngine(PairedMatPerVector):
                 H1X.append(self.vector_axpy(1.0, Fxi, self._so_to_mo(H1X_so)))
 
         return H1X
+
     def _combine_H1_H2(self, Fx, Jx, Kx=None):
         """Build the combinations:
             H1 X =  [(Ea - Ei) + 2J - K - K^T]X

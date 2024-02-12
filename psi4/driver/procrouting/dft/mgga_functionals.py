@@ -198,7 +198,8 @@ funcs.append({
 })
 
 funcs.append({
-    "name": "B97M-D3BJ",
+    "name":
+    "B97M-D3BJ",
     "xc_functionals": {
         "MGGA_XC_B97M_V": {}
     },

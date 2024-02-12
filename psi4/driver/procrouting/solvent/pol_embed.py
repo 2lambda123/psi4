@@ -91,6 +91,7 @@ def psi4mol_to_cppemol(psi4mol):
 
 
 class CppeInterface:
+
     def __init__(self, molecule, options, basisset):
         # verify that the minimal version is used if CPPE is provided
         # from outside the Psi4 ecosystem
@@ -98,8 +99,7 @@ class CppeInterface:
         if parse_version(cppe.__version__) < parse_version(min_version):
             raise ModuleNotFoundError("CPPE version {} is required at least. "
                                       "Version {}"
-                                      " was found.".format(min_version,
-                                                           cppe.__version__))
+                                      " was found.".format(min_version, cppe.__version__))
         # setup the initial CppeState
         self.molecule = molecule
         self.options = options
@@ -138,10 +138,12 @@ class CppeInterface:
                 continue
             elems.append(f"{p.element}_pe")
             geom.append([p.x, p.y, p.z])
-        qmmm_mol = core.Molecule.from_arrays(
-            geom=geom, elbl=elems, units="Bohr",
-            fix_com=True, fix_orientation=True, fix_symmetry="c1"
-        )
+        qmmm_mol = core.Molecule.from_arrays(geom=geom,
+                                             elbl=elems,
+                                             units="Bohr",
+                                             fix_com=True,
+                                             fix_orientation=True,
+                                             fix_symmetry="c1")
         n_qmmmatoms = len(elems)
 
         def __basisspec_pe_ecp(mol, role):
@@ -156,7 +158,6 @@ class CppeInterface:
         self.pe_ecp_basis = core.BasisSet.build(qmmm_mol, "BASIS", "PE_ECP_BASIS")
         ecp_mints = core.MintsHelper(self.pe_ecp_basis)
         self.V_pe_ecp = ecp_mints.ao_ecp().np
-
 
     def get_pe_contribution(self, density_matrix, elec_only=False):
         # build electrostatics operator

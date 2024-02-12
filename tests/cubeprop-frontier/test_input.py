@@ -1,5 +1,6 @@
 from addons import *
 
+
 @ctest_labeler("cubeprop;noc1")
 def test_cubeprop_frontier():
     ctest_runner(__file__, [
@@ -10,4 +11,3 @@ def test_cubeprop_frontier():
         "CH2t_5_SOMO.cube.ref",
         "CH2t_6_LVMO.cube.ref",
     ])
-

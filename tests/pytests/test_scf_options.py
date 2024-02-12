@@ -6,20 +6,34 @@ from utils import compare_values
 
 pytestmark = [pytest.mark.psi, pytest.mark.api]
 
+
 @pytest.mark.parametrize("inp", [
-    pytest.param({'options': {"guess": "core"}}, id="core"),
-    pytest.param({'options': {"guess": "gwh"}}, id="gwh"),
-    pytest.param({'options': {"guess": "huckel"}}, id="huckel"),
-    pytest.param({'late_options': {"guess": "read"}}, id="read"),
-    pytest.param({'options': {"guess": "sad"}}, id="sad"),
-    pytest.param({'options': {"guess": "sadno"}}, id="sadno"),
-    pytest.param({'options': {"guess": "sap"}}, id="sap"),
-    ]
-)
+    pytest.param({'options': {
+        "guess": "core"
+    }}, id="core"),
+    pytest.param({'options': {
+        "guess": "gwh"
+    }}, id="gwh"),
+    pytest.param({'options': {
+        "guess": "huckel"
+    }}, id="huckel"),
+    pytest.param({'late_options': {
+        "guess": "read"
+    }}, id="read"),
+    pytest.param({'options': {
+        "guess": "sad"
+    }}, id="sad"),
+    pytest.param({'options': {
+        "guess": "sadno"
+    }}, id="sadno"),
+    pytest.param({'options': {
+        "guess": "sap"
+    }}, id="sap"),
+])
 def test_guess_mix_for_broken_symmetry(inp):
 
-    refENuc  =  0.17639240356
-    refSCF   = -0.82648407827446 
+    refENuc = 0.17639240356
+    refSCF = -0.82648407827446
     refBSSCF = -0.99872135103903
 
     h2 = psi4.geometry("""
@@ -40,4 +54,3 @@ def test_guess_mix_for_broken_symmetry(inp):
     assert compare_values(refENuc, h2.nuclear_repulsion_energy(), 10, "Nuclear repulsion energy")
     assert compare_values(refSCF, thisSCF, 10, "Reference energy")
     assert compare_values(refBSSCF, thisBSSCF, 10, "Reference broken-symmetry energy")
-

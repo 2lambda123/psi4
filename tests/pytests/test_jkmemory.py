@@ -8,7 +8,8 @@ from utils import *
 
 pytestmark = [pytest.mark.psi, pytest.mark.api]
 
-def _build_system(basis): 
+
+def _build_system(basis):
     mol = psi4.geometry("""
     Ar 0 0  0
     Ar 0 0  5
@@ -16,14 +17,13 @@ def _build_system(basis):
     Ar 0 0  25
     Ar 0 0  35
     """)
-    
+
     #psi4.set_options({"INTS_TOLERANCE": 0.0})
-    
+
     basis = psi4.core.BasisSet.build(mol, target=basis)
-    aux = psi4.core.BasisSet.build(basis.molecule(), "DF_BASIS_SCF",
-                                   psi4.core.get_option("SCF", "DF_BASIS_SCF"), "JKFIT",
-                                   basis.name(), basis.has_puream())
-    
+    aux = psi4.core.BasisSet.build(basis.molecule(), "DF_BASIS_SCF", psi4.core.get_option("SCF", "DF_BASIS_SCF"),
+                                   "JKFIT", basis.name(), basis.has_puream())
+
     return basis, aux
 
 
@@ -50,4 +50,3 @@ def test_jk_memory_estimate(basis, jk_type, estimate):
     jk = psi4.core.JK.build(basis, aux=aux, jk_type=jk_type, do_wK=False, memory=1e9)
 
     assert compare_integers(estimate, jk.memory_estimate(), "{} memory estimate".format(jk_type))
-

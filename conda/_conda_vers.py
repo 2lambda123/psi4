@@ -25,13 +25,13 @@
 #
 # @END LICENSE
 #
-
 """Dummy setup.py file solely for the purposes of getting an on-the-fly
 computed version number into the conda recipe.
 
 """
 import sys
 from distutils.core import setup
+
 
 def version_func():
     import subprocess
@@ -44,6 +44,5 @@ def version_func():
     else:
         return out.strip()
 
-setup(
-    version=version_func(),
-)
+
+setup(version=version_func(), )
