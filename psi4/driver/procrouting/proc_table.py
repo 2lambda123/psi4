@@ -40,7 +40,6 @@ from psi4.driver.procrouting.dft import functionals, build_superfunctional_from_
 
 # never import wrappers or aliases into this file
 
-
 # ADVICE upon adding to the `procedures` dict:
 # * (1) add entry to `procedures` below. See ADVICE in psi4/driver/procrouting/proc.py on run_ vs. select_
 # * (2) add entry to `method_governing_type_keywords` in psi4/driver/procrouting/proc_data.py
@@ -286,7 +285,7 @@ for key in functionals:
         procedures['gradient'][key] = proc.select_scf_gradient
 
     # Hessians
-    if not ssuper.is_gga(): # N.B. this eliminates both GGA and m-GGA, as the latter contains GGA terms
+    if not ssuper.is_gga():  # N.B. this eliminates both GGA and m-GGA, as the latter contains GGA terms
         procedures['hessian'][key] = proc.run_scf_hessian
 
 # Integrate CFOUR with driver routines

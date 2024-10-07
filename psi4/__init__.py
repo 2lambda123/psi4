@@ -26,9 +26,9 @@
 # @END LICENSE
 #
 
-
 # Figure out psidatadir: envvar trumps staged/installed
 import os
+
 psi4_module_loc = os.path.dirname(os.path.abspath(__file__))
 pymod = os.path.normpath(os.path.sep.join(['@PYMOD_INSTALL_LIBDIR@', '@CMAKE_INSTALL_LIBDIR@', 'psi4']))
 if pymod.startswith(os.path.sep + os.path.sep):
@@ -48,12 +48,15 @@ elif "CMAKE_INSTALL_DATADIR" in data_dir:
 
 data_dir = os.path.abspath(data_dir)
 if not os.path.isdir(data_dir):
-    raise KeyError(f"Unable to read the Psi4 Python folder - check the PSIDATADIR environmental variable - current value is {data_dir}")
+    raise KeyError(
+        f"Unable to read the Psi4 Python folder - check the PSIDATADIR environmental variable - current value is {data_dir}"
+    )
 
 # Init core
 from . import core
 
 from psi4.core import get_num_threads, set_num_threads
+
 core.initialize()
 
 if "PSI_SCRATCH" in os.environ.keys():
@@ -67,6 +70,7 @@ del psi4_module_loc, pymod, pymod_dir_step, data_dir
 
 # Cleanup core at exit
 import atexit
+
 atexit.register(core.clean_options)
 atexit.register(core.clean)
 atexit.register(core.finalize)
@@ -102,6 +106,7 @@ if "@ENABLE_libefp@".upper() in ["1", "ON", "YES", "TRUE", "Y"]:  # pylibefp
 
 # Create a custom logger
 import logging
+
 root = logging.getLogger()  # create root
 root.setLevel("ERROR")
 logger = logging.getLogger(__name__)  # create initial psi4 from root to be configured later in extras

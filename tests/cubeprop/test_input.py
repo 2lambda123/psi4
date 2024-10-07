@@ -1,5 +1,6 @@
 from addons import *
 
+
 @ctest_labeler("quick;cubeprop")
 def test_cubeprop():
     ctest_runner(__file__, [
@@ -14,4 +15,3 @@ def test_cubeprop():
         "Ds.cube.ref",
         "Dt.cube.ref",
     ])
-

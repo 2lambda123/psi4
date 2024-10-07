@@ -34,6 +34,7 @@ from . import dependency_check
 import pprint
 from functools import partial
 import numpy as np
+
 pp = pprint.PrettyPrinter(width=120, compact=True, indent=1)
 nppp = partial(np.array_str, max_line_width=120, precision=8, suppress_small=True)
 nppp10 = partial(np.array_str, max_line_width=120, precision=10, suppress_small=True)
@@ -59,7 +60,7 @@ from psi4.driver import diatomic
 from psi4.driver import wrapper_database
 from psi4.driver import wrapper_autofrag
 from psi4.driver import schema_wrapper
-from psi4.driver import schema_wrapper as json_wrapper # Deprecate in 1.4
+from psi4.driver import schema_wrapper as json_wrapper  # Deprecate in 1.4
 from psi4.driver import frac
 
 from psi4.driver.driver import *

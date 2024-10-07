@@ -25,7 +25,6 @@
 #
 # @END LICENSE
 #
-
 """
 Module with PsiAPI helpers for PSIthon `{...}` syntax.
 Also, many Python extensions to core classes:
@@ -47,7 +46,6 @@ __all__ = [
     "set_module_options",
     "temp_circular_import_blocker",  # retire ASAP
 ]
-
 
 import os
 import re
@@ -71,18 +69,19 @@ from .exceptions import TestComparisonError, ValidationError, UpgradeHelper
 
 ## Python basis helps
 
+
 @staticmethod
 def _pybuild_basis(
-        mol: core.Molecule,
-        key: Optional[str] = None,
-        target: Optional[Union[str, Callable]] = None,
-        fitrole: str = "ORBITAL",
-        other: Optional[Union[str, Callable]] = None,
-        puream: int = -1,
-        return_atomlist: bool = False,
-        *,
-        quiet: bool = False,
-    ) -> Union[core.BasisSet, List[core.BasisSet]]:
+    mol: core.Molecule,
+    key: Optional[str] = None,
+    target: Optional[Union[str, Callable]] = None,
+    fitrole: str = "ORBITAL",
+    other: Optional[Union[str, Callable]] = None,
+    puream: int = -1,
+    return_atomlist: bool = False,
+    *,
+    quiet: bool = False,
+) -> Union[core.BasisSet, List[core.BasisSet]]:
     """Build a primary or auxiliary basis set.
 
     Parameters
@@ -192,11 +191,11 @@ core.BasisSet.build = _pybuild_basis
 
 @staticmethod
 def _core_wavefunction_build(
-        mol: core.Molecule,
-        basis: Union[None, str, core.BasisSet] = None,
-        *,
-        quiet: bool = False,
-    ) -> core.Wavefunction:
+    mol: core.Molecule,
+    basis: Union[None, str, core.BasisSet] = None,
+    *,
+    quiet: bool = False,
+) -> core.Wavefunction:
     """Build a wavefunction from minimal inputs, molecule and basis set.
 
     Parameters
@@ -428,12 +427,12 @@ core.Wavefunction.to_file = _core_wavefunction_to_file
 
 @staticmethod
 def _core_jk_build(
-        orbital_basis: core.BasisSet,
-        aux: Optional[core.BasisSet] = None,
-        jk_type: Optional[str] = None,
-        do_wK: Optional[bool] = None,
-        memory: Optional[int] = None,
-    ) -> core.JK:
+    orbital_basis: core.BasisSet,
+    aux: Optional[core.BasisSet] = None,
+    jk_type: Optional[str] = None,
+    do_wK: Optional[bool] = None,
+    memory: Optional[int] = None,
+) -> core.JK:
     """
     Constructs a Psi4 JK object from an input basis.
 
@@ -577,7 +576,8 @@ def set_options(options_dict: Dict[str, Any], verbose: int = 1):
         option = mobj.group('option').upper()
 
         if module:
-            if ((module, option, v) not in [('SCF', 'GUESS', 'READ')]) and ((module, option) not in [('PCM', 'INPUT')]):
+            if ((module, option, v) not in [('SCF', 'GUESS', 'READ')]) and ((module, option) not in [('PCM', 'INPUT')
+                                                                                                     ]):
                 # TODO guess/read exception is for distributed driver. should be handled differently.
                 try:
                     core.set_local_option(module, option, v)
@@ -741,7 +741,7 @@ def basis_helper(block: str, name: str = '', key: str = 'BASIS', set_option: boo
 
 core.OEProp.valid_methods = [
     'DIPOLE', 'QUADRUPOLE', 'MULLIKEN_CHARGES', 'LOWDIN_CHARGES', 'WIBERG_LOWDIN_INDICES', 'MAYER_INDICES',
-    'MBIS_CHARGES','MBIS_VOLUME_RATIOS', 'MO_EXTENTS', 'GRID_FIELD', 'GRID_ESP', 'ESP_AT_NUCLEI', 'NO_OCCUPATIONS'
+    'MBIS_CHARGES', 'MBIS_VOLUME_RATIOS', 'MO_EXTENTS', 'GRID_FIELD', 'GRID_ESP', 'ESP_AT_NUCLEI', 'NO_OCCUPATIONS'
 ]
 
 ## Option helpers
@@ -796,8 +796,10 @@ _qcvar_transitions = {
     "COUNTERPOISE CORRECTED INTERACTION ENERGY": ("CP-CORRECTED INTERACTION ENERGY", 1.7),
     "NON-COUNTERPOISE CORRECTED TOTAL ENERGY": ("NOCP-CORRECTED TOTAL ENERGY", 1.7),
     "NON-COUNTERPOISE CORRECTED INTERACTION ENERGY": ("NOCP-CORRECTED INTERACTION ENERGY", 1.7),
-    "VALIRON-MAYER FUNCTION COUTERPOISE TOTAL ENERGY": ("VALIRON-MAYER FUNCTION COUNTERPOISE TOTAL ENERGY", 1.7),  # note misspelling
-    "VALIRON-MAYER FUNCTION COUTERPOISE INTERACTION ENERGY": ("VMFC-CORRECTED INTERACTION ENERGY", 1.7),  # note misspelling
+    "VALIRON-MAYER FUNCTION COUTERPOISE TOTAL ENERGY":
+    ("VALIRON-MAYER FUNCTION COUNTERPOISE TOTAL ENERGY", 1.7),  # note misspelling
+    "VALIRON-MAYER FUNCTION COUTERPOISE INTERACTION ENERGY":
+    ("VMFC-CORRECTED INTERACTION ENERGY", 1.7),  # note misspelling
 }
 
 _qcvar_cancellations = {
@@ -834,7 +836,9 @@ def _qcvar_warnings(key: str) -> str:
         return replacement
 
     if key.upper() in _qcvar_cancellations:
-        raise UpgradeHelper(key.upper(), "no direct replacement", 1.4, " Consult QCVariables " + ", ".join(_qcvar_cancellations[key.upper()]) + " to recompose the quantity.")
+        raise UpgradeHelper(
+            key.upper(), "no direct replacement", 1.4,
+            " Consult QCVariables " + ", ".join(_qcvar_cancellations[key.upper()]) + " to recompose the quantity.")
 
     return key
 
@@ -1160,7 +1164,8 @@ def _core_set_variable(key: str, val: Union[core.Matrix, np.ndarray, float]) -> 
     # TODO _qcvar_warnings(key)
 
 
-def _core_wavefunction_set_variable(self: core.Wavefunction, key: str, val: Union[core.Matrix, np.ndarray, float]) -> None:
+def _core_wavefunction_set_variable(self: core.Wavefunction, key: str, val: Union[core.Matrix, np.ndarray,
+                                                                                  float]) -> None:
     """Sets scalar or array :ref:`QCVariable <sec:appendices:qcvars>` *key* to
     *val* on *self*.
 
@@ -1190,17 +1195,20 @@ def _core_wavefunction_set_variable(self: core.Wavefunction, key: str, val: Unio
     """
     if isinstance(val, core.Matrix):
         if self.has_scalar_variable(key):
-            raise ValidationError("psi4.core.Wavefunction.set_variable: Target variable '{key}' already a scalar variable!")
+            raise ValidationError(
+                "psi4.core.Wavefunction.set_variable: Target variable '{key}' already a scalar variable!")
         else:
             self.set_array_variable(key, val)
     elif isinstance(val, np.ndarray):
         if self.has_scalar_variable(key):
-            raise ValidationError("psi4.core.Wavefunction.set_variable: Target variable '{key}' already a scalar variable!")
+            raise ValidationError(
+                "psi4.core.Wavefunction.set_variable: Target variable '{key}' already a scalar variable!")
         else:
             self.set_array_variable(key, core.Matrix.from_array(_qcvar_reshape_set(key, val)))
     else:
         if self.has_array_variable(key):
-            raise ValidationError("psi4.core.Wavefunction.set_variable: Target variable '{key}' already an array variable!")
+            raise ValidationError(
+                "psi4.core.Wavefunction.set_variable: Target variable '{key}' already an array variable!")
         else:
             self.set_scalar_variable(key, val)
 
@@ -1274,7 +1282,9 @@ def _core_variables(include_deprecated_keys: bool = False) -> Dict[str, Union[fl
     return dicary
 
 
-def _core_wavefunction_variables(self, include_deprecated_keys: bool = False) -> Dict[str, Union[float, core.Matrix, np.ndarray]]:
+def _core_wavefunction_variables(self,
+                                 include_deprecated_keys: bool = False
+                                 ) -> Dict[str, Union[float, core.Matrix, np.ndarray]]:
     """Return all scalar or array :ref:`QCVariables <sec:appendices:qcvars>`
     from *self*.
 

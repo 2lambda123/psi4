@@ -1,5 +1,6 @@
 from addons import *
 
+
 @ctest_labeler("mints;noc1")
 def test_mints3():
     ctest_runner(__file__, [
@@ -22,4 +23,3 @@ def test_mints3():
         "Py-cc-pVTZ.dat",
         "Pz-cc-pVTZ.dat",
     ])
-

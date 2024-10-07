@@ -33,7 +33,6 @@ import os
 import glob
 import re
 
-
 DriverPath = ''
 InsertPath = '/../../../'
 if (len(sys.argv) == 2):
@@ -69,7 +68,9 @@ for pyfile in glob.glob(DriverPath + '../../psi4/driver/*.py'):
         fdriver.write('   :undoc-members:\n')
 
         if basename == 'driver':
-            fdriver.write('   :exclude-members: energy, optimize, opt, frequency, frequencies, freq, property, prop, molden, gdma, fchk, gradient, hessian\n')
+            fdriver.write(
+                '   :exclude-members: energy, optimize, opt, frequency, frequencies, freq, property, prop, molden, gdma, fchk, gradient, hessian\n'
+            )
         elif basename == 'wrapper_database':
             fdriver.write('   :exclude-members: db, database\n')
         elif basename == 'driver_nbody':
@@ -93,7 +94,6 @@ for pyfile in glob.glob(DriverPath + '../../psi4/driver/*.py'):
             fdriver.write('   :exclude-members: interface_cfour\n')
 
     fdriver.write('\n')
-
 
 # Python-only plugin modules in psi4/driver
 for basename in os.walk(DriverPath + '../../psi4/driver').next()[1]:
