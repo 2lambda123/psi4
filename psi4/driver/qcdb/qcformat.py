@@ -25,7 +25,6 @@
 #
 # @END LICENSE
 #
-
 """Parent classes for quantum chemistry program input and output file
 formats.
 """

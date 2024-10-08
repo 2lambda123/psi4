@@ -31,7 +31,6 @@ import math
 import numpy as np
 import qcelemental as qcel
 
-
 BOND_FACTOR = 1.2  # fudge factor for bond length threshold
 
 _expected_bonds = {
@@ -42,7 +41,7 @@ _expected_bonds = {
     'F': 1,
     'P': 3,
     'S': 2,
-    }
+}
 
 
 def xyz2mol(self):
@@ -126,7 +125,8 @@ def _bond_profile(self):
                 # psi4.core.Molecule
                 dist = self.xyz(j).distance(self.xyz(i))
             # TOOD check bohr/ang progress
-            bonded_dist = BOND_FACTOR * (qcel.covalentradii.get(self.symbol(i)) + qcel.covalentradii.get(self.symbol(j)))
+            bonded_dist = BOND_FACTOR * (qcel.covalentradii.get(self.symbol(i)) +
+                                         qcel.covalentradii.get(self.symbol(j)))
             if bonded_dist > dist:
                 bonds.append([i, j, 1])
 

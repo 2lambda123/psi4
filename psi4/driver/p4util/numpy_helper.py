@@ -40,7 +40,6 @@ __all__ = [
     "block_diagonal_array",
 ]
 
-
 import sys
 from typing import Any, Dict, Iterator, List, Optional, Tuple, Union
 

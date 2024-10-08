@@ -42,10 +42,20 @@ from .libmintsmolecule import compute_atom_map
 
 LINEAR_A_TOL = 1.0E-2  # tolerance (roughly max dev) for TR space
 
-__all__ = ["compare_vibinfos", "filter_nonvib", "filter_omega_to_real", "harmonic_analysis", "hessian_symmetrize", "print_molden_vibs", "print_vibs", "thermo"]
+__all__ = [
+    "compare_vibinfos", "filter_nonvib", "filter_omega_to_real", "harmonic_analysis", "hessian_symmetrize",
+    "print_molden_vibs", "print_vibs", "thermo"
+]
 
 
-def compare_vibinfos(expected: Dict[str, qcel.Datum], computed: Dict[str, Datum], tol: float, label: str, verbose: int = 1, forgive: List = None, required: List = None, toldict: Dict[str, float] = None) -> bool:
+def compare_vibinfos(expected: Dict[str, qcel.Datum],
+                     computed: Dict[str, Datum],
+                     tol: float,
+                     label: str,
+                     verbose: int = 1,
+                     forgive: List = None,
+                     required: List = None,
+                     toldict: Dict[str, float] = None) -> bool:
     """Returns True if two dictionaries of vibration Datum objects are equivalent within a tolerance.
 
     Parameters
@@ -133,8 +143,8 @@ def compare_vibinfos(expected: Dict[str, qcel.Datum], computed: Dict[str, Datum]
             same = abs(expected[asp].data - computed[asp].data) < ktol
             print_stuff(asp=asp, same=same, ref=expected[asp].data, val=computed[asp].data)
         else:
-            same = (np.allclose(expected[asp].data, computed[asp].data, atol=ktol) and
-                   (expected[asp].data.shape == computed[asp].data.shape))
+            same = (np.allclose(expected[asp].data, computed[asp].data, atol=ktol)
+                    and (expected[asp].data.shape == computed[asp].data.shape))
             print_stuff(asp=asp, same=same, ref=expected[asp].data, val=computed[asp].data)
 
         if asp not in forgive:
@@ -196,7 +206,10 @@ def hessian_symmetrize(hess: np.ndarray, mol: psi4.core.Molecule) -> np.ndarray:
     return m_tot
 
 
-def print_molden_vibs(vibinfo: Dict[str, Datum], atom_symbol: Union[np.ndarray, List[str]], geom: Union[np.ndarray, List[List[float]]], standalone: bool = True) -> str:
+def print_molden_vibs(vibinfo: Dict[str, Datum],
+                      atom_symbol: Union[np.ndarray, List[str]],
+                      geom: Union[np.ndarray, List[List[float]]],
+                      standalone: bool = True) -> str:
     """Format vibrational analysis for Molden.
 
     Parameters
@@ -280,9 +293,12 @@ def _check_rank_degen_modes(arr, freq, ref, difftol, svdtol, verbose=1):
             normco_ok = normco_ok and ranks_ok
         if verbose >= 2 or not normco_ok:
             with np.printoptions(precision=4):
-                print(f"degree={degree} difftol={difftol} {diff_ok} svdtol={svdtol} {rank_cvecs} == {rank_evecs} == {rank_cevecs} {rank_cvecs == rank_evecs == rank_cevecs} svd={CE}")
+                print(
+                    f"degree={degree} difftol={difftol} {diff_ok} svdtol={svdtol} {rank_cvecs} == {rank_evecs} == {rank_cevecs} {rank_cvecs == rank_evecs == rank_cevecs} svd={CE}"
+                )
 
     return normco_ok
+
 
 def _check_degen_modes(arr, freq, verbose=1):
     """Use `freq` to identify degenerate columns of eigenvectors `arr` and
@@ -352,7 +368,14 @@ def _phase_cols_to_max_element(arr, tol=1.e-2, verbose=1):
     return arr2
 
 
-def harmonic_analysis(hess: np.ndarray, geom: np.ndarray, mass: np.ndarray, basisset: psi4.core.BasisSet, irrep_labels: List[str], dipder: np.ndarray = None, project_trans: bool = True, project_rot: bool = True) -> Tuple[Dict[str, Datum], str]:
+def harmonic_analysis(hess: np.ndarray,
+                      geom: np.ndarray,
+                      mass: np.ndarray,
+                      basisset: psi4.core.BasisSet,
+                      irrep_labels: List[str],
+                      dipder: np.ndarray = None,
+                      project_trans: bool = True,
+                      project_rot: bool = True) -> Tuple[Dict[str, Datum], str]:
     """Extract frequencies, normal modes and other properties from electronic Hessian. Like so much other Psi4 goodness, originally by @andysim
 
     Parameters
@@ -655,7 +678,14 @@ def _format_omega(omega, decimals):
     return np.array(freqs)
 
 
-def print_vibs(vibinfo: Dict[str, Datum], atom_lbl: List[str] = None, *, normco: str = 'x', shortlong: bool = True, groupby: int = None, prec: int = 4, ncprec: int = None) -> str:
+def print_vibs(vibinfo: Dict[str, Datum],
+               atom_lbl: List[str] = None,
+               *,
+               normco: str = 'x',
+               shortlong: bool = True,
+               groupby: int = None,
+               prec: int = 4,
+               ncprec: int = None) -> str:
     """Pretty printer for vibrational analysis.
 
     Parameters
@@ -856,7 +886,7 @@ def print_vibs(vibinfo: Dict[str, Datum], atom_lbl: List[str] = None, *, normco:
                 for xyz in range(3):
                     text += """{:{presp}}{:5d}    {}    {:{width}}""".format('',
                                                                              at + 1,
-                                                                             'XYZ' [xyz],
+                                                                             'XYZ'[xyz],
                                                                              atom_lbl[at],
                                                                              width=prewidth - 14,
                                                                              presp=presp)
@@ -872,7 +902,15 @@ def print_vibs(vibinfo: Dict[str, Datum], atom_lbl: List[str] = None, *, normco:
     return text
 
 
-def thermo(vibinfo, T: float, P: float, multiplicity: int, molecular_mass: float, E0: float, sigma: int, rot_const: np.ndarray, rotor_type: str = None) -> Tuple[Dict[str, Datum], str]:
+def thermo(vibinfo,
+           T: float,
+           P: float,
+           multiplicity: int,
+           molecular_mass: float,
+           E0: float,
+           sigma: int,
+           rot_const: np.ndarray,
+           rotor_type: str = None) -> Tuple[Dict[str, Datum], str]:
     """Perform thermochemical analysis from vibrational output.
 
     Parameters
@@ -1111,7 +1149,11 @@ def filter_nonvib(vibinfo: Dict[str, Datum], remove: List[int] = None) -> Dict[s
             axis = 1
         else:
             axis = 0
-        work[asp] = Datum(oasp.label, oasp.units, np.delete(oasp.data, remove, axis=axis), comment=oasp.comment, numeric=False)
+        work[asp] = Datum(oasp.label,
+                          oasp.units,
+                          np.delete(oasp.data, remove, axis=axis),
+                          comment=oasp.comment,
+                          numeric=False)
 
     return work
 
@@ -1127,7 +1169,11 @@ def filter_omega_to_real(omega: np.ndarray) -> np.ndarray:
     return np.asarray(freqs)
 
 
-def _get_TR_space(m: np.ndarray, geom: np.ndarray, space: str = 'TR', tol: float = None, verbose: int = 1) -> np.ndarray:
+def _get_TR_space(m: np.ndarray,
+                  geom: np.ndarray,
+                  space: str = 'TR',
+                  tol: float = None,
+                  verbose: int = 1) -> np.ndarray:
     """Form the idealized translation and rotation dof from geometry `geom` and masses `m`.
     Remove any linear dependencies and return an array of shape (3, 3) for atoms, (5, 3 * nat) for linear `geom`,
     or (6, 3 * nat) otherwise. To handle noisy linear geometries, pass `tol` on the order of max deviation.

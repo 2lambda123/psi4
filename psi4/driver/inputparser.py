@@ -42,7 +42,6 @@ from psi4 import core
 from psi4.driver.p4util.util import set_memory
 from psi4.driver.p4util.exceptions import *
 
-
 # inputfile contents to be preserved from the processor
 literals = {}
 
@@ -319,7 +318,8 @@ def process_basis_block(matchobj):
             result += """%s    basstrings['%s'] = \"\"\"\n%s\n\"\"\"\n""" % \
                 (spaces, basname(name), basblock[0])
         else:
-            message = ("Conflicting basis set specification: assign lines present but shells have no [basname] label.""")
+            message = ("Conflicting basis set specification: assign lines present but shells have no [basname] label."
+                       "")
             raise TestComparisonError(message)
     else:
         # case with specs separated by [basname] markers

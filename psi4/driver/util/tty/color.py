@@ -25,7 +25,6 @@
 #
 # @END LICENSE
 #
-
 """
 This file implements an expression syntax, similar to printf, for adding
 ANSI colors to text.
@@ -88,19 +87,31 @@ class ColorParseError(Exception):
 
 
 # Text styles for ansi codes
-styles = {'*': '1',  # bold
-          '_': '4',  # underline
-          None: '0'}  # plain
+styles = {
+    '*': '1',  # bold
+    '_': '4',  # underline
+    None: '0'
+}  # plain
 
 # Dim and bright ansi colors
-colors = {'k': 30, 'K': 90,  # black
-          'r': 31, 'R': 91,  # red
-          'g': 32, 'G': 92,  # green
-          'y': 33, 'Y': 93,  # yellow
-          'b': 34, 'B': 94,  # blue
-          'm': 35, 'M': 95,  # magenta
-          'c': 36, 'C': 96,  # cyan
-          'w': 37, 'W': 97}  # white
+colors = {
+    'k': 30,
+    'K': 90,  # black
+    'r': 31,
+    'R': 91,  # red
+    'g': 32,
+    'G': 92,  # green
+    'y': 33,
+    'Y': 93,  # yellow
+    'b': 34,
+    'B': 94,  # blue
+    'm': 35,
+    'M': 95,  # magenta
+    'c': 36,
+    'C': 96,  # cyan
+    'w': 37,
+    'W': 97
+}  # white
 
 # Regex to be used for color formatting
 color_re = r'@(?:@|\.|([*_])?([a-zA-Z])?(?:{((?:[^}]|}})*)})?)'
@@ -110,6 +121,7 @@ _force_color = False
 
 
 class match_to_ansi():
+
     def __init__(self, color=True):
         self.color = color
 
@@ -132,14 +144,12 @@ class match_to_ansi():
         elif m == '@.':
             return self.escape(0)
         elif m == '@':
-            return ColorParseError("Incomplete color format: '%s' in '%s'"
-                                   % (color, match.string))
+            return ColorParseError("Incomplete color format: '%s' in '%s'" % (color, match.string))
 
         string = styles[style]
         if color:
             if color not in colors:
-                raise ColorParseError("invalid color specifier: '%s' in '%s'"
-                                      % (color, match.string))
+                raise ColorParseError("invalid color specifier: '%s' in '%s'" % (color, match.string))
             string += ';' + str(colors[color])
 
         colored_text = ''
@@ -192,6 +202,7 @@ def cescape(string):
 
 
 class ColorStream(object):
+
     def __init__(self, stream, color=None):
         self._stream = stream
         self._color = color

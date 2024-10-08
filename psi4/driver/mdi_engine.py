@@ -58,6 +58,7 @@ except ImportError:
 
 
 class MDIEngine():
+
     def __init__(self, scf_method: str, **kwargs):
         """ Initialize an MDIEngine object for communication with MDI (MolSSI driver interface)
 
@@ -257,7 +258,6 @@ class MDIEngine():
             self.molecule.set_nuclear_charge(iatom, charges[jatom])
             jatom = jatom + 1
 
-
     # Respond to the >COORDS command
     def recv_coords(self, coords=None):
         """ Receive a set of nuclear coordinates through MDI and assign them to the atoms in the current molecule
@@ -413,7 +413,6 @@ class MDIEngine():
         # If a lattice of point charges was set, unset it now
         if self.set_lattice:
             self.kwargs.pop("external_potentials", None)
-            
 
     # Enter server mode, listening for commands from the driver
     def listen_for_commands(self):

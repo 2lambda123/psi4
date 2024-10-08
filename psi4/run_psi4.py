@@ -119,7 +119,8 @@ if args["inplace"]:
         raise ImportError("Cannot run inplace from an installed directory.")
 
     import sysconfig
-    core_location = os.path.dirname(os.path.abspath(__file__)) + os.path.sep + "core" + sysconfig.get_config_var("EXT_SUFFIX")
+    core_location = os.path.dirname(
+        os.path.abspath(__file__)) + os.path.sep + "core" + sysconfig.get_config_var("EXT_SUFFIX")
     if not os.path.isfile(core_location):
         raise ImportError("A compiled Psi4 core{} needs to be symlinked to the {} folder".format(
             sysconfig.get_config_var("EXT_SUFFIX"), os.path.dirname(__file__)))
@@ -163,7 +164,9 @@ if args['plugin_compile']:
 if args['psiapi_path']:
     pyexe_dir = os.path.dirname("@Python_EXECUTABLE@")
     bin_dir = Path(cmake_install_prefix) / 'bin'
-    print(f"""export PATH={pyexe_dir}:$PATH  # python interpreter\nexport PATH={bin_dir}:$PATH  # psi4 executable\nexport PYTHONPATH={lib_dir}:$PYTHONPATH  # psi4 pymodule""")
+    print(
+        f"""export PATH={pyexe_dir}:$PATH  # python interpreter\nexport PATH={bin_dir}:$PATH  # psi4 executable\nexport PYTHONPATH={lib_dir}:$PYTHONPATH  # psi4 pymodule"""
+    )
     sys.exit()
 
 if args["module"]:
@@ -177,9 +180,11 @@ if args["psidatadir"] is not None:
 
 ### Actually import psi4 and apply setup ###
 
+
 # Arrange for warnings to ignore everything except the message
 def custom_formatwarning(msg, *args, **kwargs):
     return str(msg) + '\n'
+
 
 warnings.formatwarning = custom_formatwarning
 

@@ -109,7 +109,10 @@ def _CMake_to_Py_boolean(cmakevar):
         return False
 
 
-def psi4_which(command, *, return_bool: bool = False, raise_error: bool = False,
+def psi4_which(command,
+               *,
+               return_bool: bool = False,
+               raise_error: bool = False,
                raise_msg: str = None) -> Union[bool, None, str]:
     """Test to see if a command is available in Psi4 search path.
 
@@ -177,6 +180,7 @@ def addons(request: str = None) -> Union[bool, List[str]]:
     *request* not passed, returns list of available Add-Ons: `['adcc', 'ambit', 'c̶c̶t̶3̶', ...` .
 
     """
+
     def strike(text):
         return ''.join(itertools.chain.from_iterable(zip(text, itertools.repeat('\u0336'))))
 
@@ -266,7 +270,8 @@ def set_output_file(ofile: str, append: bool = False, *, loglevel: int = 20, exe
 
     # Create formatters
     # * detailed:  example: 2019-11-20:01:13:46,811 DEBUG    [psi4.driver.task_base:156]
-    f_format_detailed = logging.Formatter("%(asctime)s,%(msecs)d %(levelname)-8s [%(name)s:%(lineno)d] %(message)s", datefmt="%Y-%m-%d:%H:%M:%S")
+    f_format_detailed = logging.Formatter("%(asctime)s,%(msecs)d %(levelname)-8s [%(name)s:%(lineno)d] %(message)s",
+                                          datefmt="%Y-%m-%d:%H:%M:%S")
     # * light:     example: 2019-11-20:10:45:21 FINDIFREC CLASS INIT DATA
     f_format_light = logging.Formatter("%(asctime)s %(message)s", datefmt="%Y-%m-%d:%H:%M:%S")
 

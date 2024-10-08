@@ -25,7 +25,6 @@
 #
 # @END LICENSE
 #
-
 """Attempts to catch Python based import errors and provides possible solutions."""
 
 __all__ = []

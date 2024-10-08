@@ -4,7 +4,6 @@ import getpass
 import pathlib
 import operator
 
-
 # How do pytest tests in `test_standard_suite.py` communicate with docs?
 # * after calling psi4 for each test, `standard_suite_runner.py` appends a one-line dict describing the result to local file "stdsuite_psi4.txt".
 # * thus, local "stdsuite_psi4.txt" files with unordered entries end up in pytest's basetemp/popen-*/ (if run parallel; otherwise, single file in basetemp/).
@@ -30,12 +29,11 @@ import operator
 #     * still from a fewest-sources-of truth argument, one should only store stdsuite_psi4.txt records in the repo. but they're 2k lines long and not easily interpretable.
 #     * so regenerate tables in pairs: a proper reST to objdir (less human-readable) and a unicode version to sphinxman/source for repo (readable and used to monitor changes)
 
-
 # edit as needed
 PYTEST_SCRATCH = f"/tmp/pytest-of-{getpass.getuser()}/pytest-current/"
 
 # concatenate pytest fragments into a single local file
-with open("stdsuite_psi4.txt","wb") as wfd:
+with open("stdsuite_psi4.txt", "wb") as wfd:
     for fl in pathlib.Path(PYTEST_SCRATCH).glob("**/stdsuite_psi4.txt"):
         with open(fl, "rb") as fd:
             shutil.copyfileobj(fd, wfd)
@@ -45,7 +43,8 @@ with open("stdsuite_psi4.txt", "r") as fp:
     contents = fp.readlines()
 stuffs = [ast.literal_eval(ln) for ln in contents]
 stuffs = [dict(t) for t in {tuple(d.items()) for d in stuffs}]  # thanks, https://stackoverflow.com/a/9427216
-stuffs.sort(key=operator.itemgetter("method", "driver", "reference", "fcae", "scf_type", "corl_type", "module", "status", "note", "sdsc"))
+stuffs.sort(key=operator.itemgetter("method", "driver", "reference", "fcae", "scf_type", "corl_type", "module",
+                                    "status", "note", "sdsc"))
 
 # write out single file with sorted lines of dicts
 with open("stdsuite_psi4.txt", "w") as fp:
